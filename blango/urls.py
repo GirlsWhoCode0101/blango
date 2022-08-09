@@ -22,4 +22,5 @@ urlpatterns = [
     path('', blog.views.index_view),
     path('post/<slug>/', blog.views.post_detail_view, name="blog-post-detail"),
 ]
+
 # codio second Twc29yZdfj63EME
