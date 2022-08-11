@@ -1,10 +1,14 @@
+import logging
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from blog.models import Post
 from blog.forms import CommentForm
 
+logger = logging.getLogger(__name__)
+
 def index_view(request):
     posts = Post.objects.filter(published_at__lte=timezone.now())
+    logger.debug("Got %d posts", len(posts))
     return render(request, "blog/index.html", {"posts": posts})
 
 def post_detail_view(request, slug):
@@ -18,6 +22,7 @@ def post_detail_view(request, slug):
                 comment.content_object = post
                 comment.creator = request.user
                 comment.save() # now attributes are set and we can save
+                logger.info("Created comment on Post %d for user %s", post.pk, request.user)
                 return redirect(request.path_info)  # this refreshes the page for the user to see their comment
         else:
             comment_form = CommentForm()
