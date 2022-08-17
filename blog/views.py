@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 def index_view(request):
     #  from django.http import HttpResponse
     #  return HttpResponse(str(request.user).encode("ascii"))
-    posts = Post.objects.filter(published_at__lte=timezone.now())
+    posts = Post.objects.filter(published_at__lte=timezone.now()).select_related("author")  #  select_rel is like a join in SQL
     logger.debug("Got %d posts", len(posts))
     return render(request, "blog/index.html", {"posts": posts})
 
@@ -38,3 +38,7 @@ def post_detail_view(request, slug):
 
     return render(request, "blog/post-detail.html", {"post": post, "comment_form": comment_form})
 
+#  for DjDebugToolbar we need the IP adress Django sees
+def get_ip(request):
+  from django.http import HttpResponse
+  return HttpResponse(request.META['REMOTE_ADDR'])
