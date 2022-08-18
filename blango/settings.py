@@ -45,6 +45,8 @@ class Dev(Configuration):
 
   ADMINS = [("Janine Sukowski", "janine_byapple@me.com")]
 
+  AUTH_USER_MODEL = "blango_auth.user"
+
   LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -94,6 +96,7 @@ class Dev(Configuration):
       'django.contrib.sessions',
       'django.contrib.messages',
       'django.contrib.staticfiles',
+      'blango_auth',
       'blog',
       'crispy_forms',
       'crispy_bootstrap5',
