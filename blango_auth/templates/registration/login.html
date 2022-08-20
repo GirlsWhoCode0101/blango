@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags blog_extras %}
+{% block title %}Log In to Blango{% endblock %}
+{% block content %}
+{% row "justify-content-center" %}
+    <div class="col col-md-6">
+    {% if next %}
+        {% if user.is_authenticated %}
+        <p>Your account doesn't have access to this page. To proceed,
+        please login with an account that has access.</p>
+        {% else %}
+        <p>Please login to see this page.</p>
+        {% endif %}
+    {% endif %}
+{% endrow %}
+
+{% row "justify-content-center" %}  <!--center the column in the middle of the screen -->
+    <div class="col col-md-6">
+    <!-- 50% width above the medium breakpoint but full width below it -->
+        <form method="post" action="{% url "login" %}">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary">Log In</button>
+        <input type="hidden" name="next" value="{{ next }}">
+        </form>
+
+        <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+{% endrow %}
+{% endblock %}

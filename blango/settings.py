@@ -86,6 +86,10 @@ class Dev(Configuration):
     },
   }
 
+  #  for dev email to console
+  EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+  ACCOUNT_ACTIVATION_DAYS = 7
+  REGISTRATION_OPEN = True
 
   # Application definition
 
