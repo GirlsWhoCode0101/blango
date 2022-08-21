@@ -99,12 +99,17 @@ class Dev(Configuration):
       'django.contrib.contenttypes',
       'django.contrib.sessions',
       'django.contrib.messages',
+      'django.contrib.sites',  # 2 webseiten greifen auf ein DJnago Projekt zu z.B. für Allauth
       'django.contrib.staticfiles',
       'blango_auth',
       'blog',
       'crispy_forms',
       'crispy_bootstrap5',
       'debug_toolbar',
+      'allauth',
+      'allauth.account',
+      'allauth.socialaccount',
+      'allauth.socialaccount.providers.google'
   ]
 
 #  order here is important!
@@ -179,6 +184,16 @@ class Dev(Configuration):
           'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
       },
   ]
+
+  #  for allauth: so that django knows which site object our settings file applies to
+  SITE_ID = 1
+  # These four settings tell Django Allauth:
+  # There is no username field on the User model.
+  ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+  # The third-party provider must provide an email address when authenticating.
+  ACCOUNT_EMAIL_REQUIRED = True
+  ACCOUNT_USERNAME_REQUIRED = False
+  ACCOUNT_AUTHENTICATION_METHOD = "email"
 
 
   # Internationalization
